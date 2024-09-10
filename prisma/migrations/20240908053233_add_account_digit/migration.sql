@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Account" ADD COLUMN     "digit" INTEGER NOT NULL DEFAULT 0;

@@ -1,0 +1,622 @@
+{
+  "info": {
+    "_postman_id": "43b5c17d-d299-4d84-8b85-08abc7266f71",
+    "name": "Finance Flow",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "34975249"
+  },
+  "item": [
+    {
+      "name": "Autenticação",
+      "item": [
+        {
+          "name": "Login Como Admin",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "pm.globals.set(\"AUTH_TOKEN\", jsonData.access_token);"
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [""],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{AUTH_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"admin@example.com\",\n    \"password\": \"1234\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/auth/login",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "auth", "login"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login Como Usuário",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "pm.globals.set(\"AUTH_TOKEN\", jsonData.access_token);"
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [""],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{AUTH_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"user.one@example.com\",\n    \"password\": \"1234\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/auth/login",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "auth", "login"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Usuários",
+      "item": [
+        {
+          "name": "[ADMIN] Listar Usuários",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{AUTH_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/api/users",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "users"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Operações",
+      "item": [
+        {
+          "name": "[USER] Depositar",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{AUTH_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"amount\": \"5.50T\",\n    \"account\": \"00001\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/operations/deposit",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "operations", "deposit"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "[USER] Sacar",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{AUTH_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"amount\": 1.50,\n    \"account\": \"00001\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/operations/withdraw",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "operations", "withdraw"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "[USER] Transferir",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{AUTH_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"amount\": 2.50,\n    \"fromAccount\": \"0001\",\n    \"toAccount\": \"0002\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/operations/transfer",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "operations", "transfer"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Contas",
+      "item": [
+        {
+          "name": "[USER] Criar Conta",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{AUTH_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Marllef H. A. Freitas\",\n    \"email\": \"marllef.alves@gmail.com\",\n    \"password\": \"1234\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/accounts",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "accounts"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "[USER] Extrato",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{AUTH_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"amount\": 10.0,\n    \"account\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/accounts/:account_number/statement?start=2024-09-07&end=2024-09-20",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "accounts", ":account_number", "statement"],
+              "query": [
+                {
+                  "key": "start",
+                  "value": "2024-09-07"
+                },
+                {
+                  "key": "end",
+                  "value": "2024-09-20"
+                },
+                {
+                  "key": "type",
+                  "value": "TRANSFER_IN",
+                  "disabled": true
+                },
+                {
+                  "key": "type",
+                  "value": "TRANSFER_OUT",
+                  "disabled": true
+                },
+                {
+                  "key": "type",
+                  "value": "WITHDRAW",
+                  "disabled": true
+                }
+              ],
+              "variable": [
+                {
+                  "key": "account_number",
+                  "value": "00001"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "[ADMIN] Listar Contas",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{AUTH_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"amount\": 10.0,\n    \"account\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/accounts",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "accounts"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "[ADMIN] Ver Saldo",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{AUTH_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/api/accounts/:account_number/balance",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "accounts", ":account_number", "balance"],
+              "variable": [
+                {
+                  "key": "account_number",
+                  "value": "00001"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "[ADMIN] Ativar/Desativar Conta",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{AUTH_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"isActive\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/accounts/:account_number",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "accounts", ":account_number"],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "TRANSFER_IN",
+                  "disabled": true
+                },
+                {
+                  "key": "type",
+                  "value": "TRANSFER_OUT",
+                  "disabled": true
+                }
+              ],
+              "variable": [
+                {
+                  "key": "account_number",
+                  "value": "00001"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "[ADMIN] Deletar Conta",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [""],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{AUTH_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/api/accounts/:account_number",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "accounts", ":account_number"],
+              "variable": [
+                {
+                  "key": "account_number",
+                  "value": "00014"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Relatórios",
+      "item": [
+        {
+          "name": "[ADMIN] Relatório Resumido",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{AUTH_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"amount\": 10.0,\n    \"account\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/reports/summary?start=2024-09-05&end=2024-09-20",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "reports", "summary"],
+              "query": [
+                {
+                  "key": "start",
+                  "value": "2024-09-05"
+                },
+                {
+                  "key": "end",
+                  "value": "2024-09-20"
+                },
+                {
+                  "key": "type",
+                  "value": "DEPOSIT",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "[ADMIN] Relatório Detalhado",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{AUTH_TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"amount\": 10.0,\n    \"account\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/api/reports/details?start=2023-09-05&end=2024-09-10&account=00002",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "reports", "details"],
+              "query": [
+                {
+                  "key": "start",
+                  "value": "2023-09-05"
+                },
+                {
+                  "key": "end",
+                  "value": "2024-09-10"
+                },
+                {
+                  "key": "type",
+                  "value": "DEPOSIT",
+                  "disabled": true
+                },
+                {
+                  "key": "account",
+                  "value": "00002"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

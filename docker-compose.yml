@@ -1,0 +1,44 @@
+version: '3.7'
+
+services:
+  server:
+    container_name: finance_flow_server
+    build:
+      context: .
+      dockerfile: docker/server/Dockerfile
+    command: sh -c "npm run start:prod"
+    environment:
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-root}:${POSTGRES_PASSWORD:-root}@postgres:5432/${POSTGRES_DB:-finance}?schema=public
+      - JWT_SECRET=${JWT_SECRET:-AWESOME_SECRET}
+    ports:
+      - 3000:3000
+    depends_on:
+      - postgres
+    restart: unless-stopped
+    networks:
+      - pg_network
+
+  postgres:
+    container_name: finance_flow_postgres
+    build:
+      context: docker/postgres
+      args:
+        - POSTGRES_VERSION=latest
+    ports:
+      - 5433:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-root}
+      POSTGRES_USER: ${POSTGRES_USER:-root}
+      POSTGRES_DB: ${POSTGRES_DB:-finance}
+    restart: unless-stopped
+    networks:
+      - pg_network
+
+volumes:
+  postgres_data:
+
+networks:
+  pg_network:
+    driver: bridge
