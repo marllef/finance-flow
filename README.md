@@ -66,7 +66,7 @@ sudo docker-compose exec server npx prisma db seed
 
 ## Testes unitários e E2E (Opcional)
 
-As rotas mais criticas dessa aplicação estão cobertas por testes. Para executá-los, execute o seguinte comando:
+As rotas mais criticas dessa aplicação estão cobertas por testes. Para executá-los voce precisa baixar as dependencias do projeto, depois execute o seguinte comando:
 ``` sh
 yarn test --verbose
 ```
