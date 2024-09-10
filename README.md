@@ -86,3 +86,54 @@ yarn test:e2e
     - Usuário 1: user.one@example.com | Senha: 1234
     - Usuário 2: user.two@example.com | Senha: 1234
     - Usuário 3: user.three@example.com | Senha: 1234
+
+## Principais requests
+- Login como ADMIN (Administrador):
+```curl 
+curl --location 'http://localhost:3000/api/auth/login' \ --header 'Content-Type: application/json' \ --data-raw '{"email": "admin@example.com","password": "1234"}'
+```
+
+- Login como USER (Usuário Comum):
+```curl 
+curl --location 'http://localhost:3000/api/auth/login' \ --header 'Content-Type: application/json' \ --data-raw '{ "email": "user.one@example.com", "password": "1234" }'
+```
+
+- Realizar deposito:
+``` curl 
+curl --location 'http://localhost:3000/api/operations/deposit' \ --header 'Content-Type: application/json' \ --header 'Authorization: Bearer ${TOKEN}' \ --data '{ "amount": 5.50, "account": "00001" }'
+```
+
+- Realizar saque:
+``` curl
+curl --location 'http://localhost:3000/api/operations/withdraw' \ --header 'Content-Type: application/json' \ --header 'Authorization: Bearer ${TOKEN}' \ --data '{ "amount": 1.50, "account": "00001" }' 
+```
+
+- Realizar transferência:
+``` curl 
+curl --location 'http://localhost:3000/api/operations/transfer' \ --header 'Content-Type: application/json' \ --header 'Authorization: Bearer ${TOKEN}' \ --data '{ "amount": 2.50, "fromAccount": "0001", "toAccount": "0002" }'
+```
+
+- Criar conta:
+``` curl 
+curl --location 'http://localhost:3000/api/accounts' \ --header 'Content-Type: application/json' \ --header 'Authorization: Bearer ${TOKEN}' \ --data-raw '{ "name": "Nome do usuário", "email": "email@example.com", "password": "strongPassword" }'
+```
+
+- Listar Contas:
+``` curl 
+curl --location --request GET 'http://localhost:3000/api/accounts' \ --header 'Content-Type: application/json' \ --header 'Authorization: Bearer ${TOKEN}'
+```
+
+- Ativar/Desativar Conta:
+``` curl
+curl --location --request PATCH 'http://localhost:3000/api/accounts/00001' \ --header 'Content-Type: application/json' \ --header 'Authorization: Bearer ${TOKEN}' \ --data '{ "isActive": true }'
+```
+
+- Relatorio Agregado Resumido:
+``` curl 
+curl --location --request GET 'http://localhost:3000/api/reports/summary?start=2024-09-05&end=2024-09-20' \ --header 'Content-Type: application/json' \ --header 'Authorization: Bearer ${TOKEN}'
+```
+
+- Relatorio Agregado Detalhado:
+``` curl 
+curl --location --request GET 'http://localhost:3000/api/reports/details?start=2023-09-05&end=2024-09-10&account=00002' \ --header 'Content-Type: application/json' \ --header 'Authorization: Bearer ${TOKEN}'
+```
