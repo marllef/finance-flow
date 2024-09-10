@@ -33,7 +33,7 @@ Para iniciar o projeto, use os seguintes comandos:
 1. Clone esse repositório em sua máquina local:
 
 ```sh
-git clone https://github.com/marllef/finance-flow
+git clone https://github.com/marllef/finance-flow.git
 ```
 
 2. Execute o script `deploy.sh`:
