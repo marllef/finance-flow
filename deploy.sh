@@ -16,7 +16,7 @@ fi
 
 echo "Configurando ambiente..."
 cp .env.example .env
-if [["$1" == "-i"]]; then
+if [[ "$1" == "-i" ]]; then
   echo "Instalando dependências..."
   if command_exists yarn; then
     yarn install
